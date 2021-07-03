@@ -5,10 +5,10 @@
 
  * 2 ядра процессора;
  * 2 Гб оперативной памяти;
- * Операционная система CentOS 8;
+ * Операционная система CentOS 8, Debian 10;
 
 
-<p>Подготовка к установке:</p>
+<p>Подготовка к установке на CentOS:</p>
 
  * yum install epel-release
  * yum update
@@ -16,6 +16,15 @@
  * firewall-cmd --permanent --add-port=27015/udp
  * adduser game
  * passwd game
+ * reboot
+
+
+<p>Подготовка к установке на Debian:</p>
+
+ * apt update && apt full-upgrade
+ * dpkg --add-architecture i386 && apt update && apt install lib32gcc1 lib32stdc++6 lib32z1
+ * dpkg --add-architecture amd64 && apt update && apt install screen vsftpd wget
+ * adduser game
  * reboot
 
 
@@ -28,10 +37,19 @@
    > изменить ip адрес l4d2 сервера
 
 
-<p>Настройка cron:</p>
+<p>Настройка cron на CentOS:</p>
 
  * su root
  * nano /var/spool/cron/root
+ * */2 * * * * su - game -c 'python3 /home/game/l4d2_cron.py' > /dev/null 2>&1
+ * 30 6 * * * su - game -c 'python3 /home/game/l4d2_restart.py' > /dev/null 2>&1
+
+
+<p>Настройка cron на Debian:</p>
+
+ * su root
+ * EDITOR='nano'
+ * crontab -e
  * */2 * * * * su - game -c 'python3 /home/game/l4d2_cron.py' > /dev/null 2>&1
  * 30 6 * * * su - game -c 'python3 /home/game/l4d2_restart.py' > /dev/null 2>&1
 
@@ -52,3 +70,4 @@
  * cron раз в 2 минуты проводит опрос l4d2 сервера и если он завис, то принудительно перезагрузит
  * После перезагрузки VDS, сервер l4d2 сам запустится от имени пользователя game
  * Данные скрипты работают на python 3
+ * Обязательно настройте правила фаервола
