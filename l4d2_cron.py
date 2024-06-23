@@ -13,7 +13,13 @@ import socket
 import time
 
 # ip адрес l4d2 сервера
-sg_ip = '62.113.112.155'
+sg_ip = '127.0.0.1'
+
+# Port l4d2 сервера. По умолчанию 27015
+sg_port = 27015
+
+# Максимальное количество игроков l4d2 сервера
+sg_max_players = 18
 
 #
 ig_err = 0
@@ -106,11 +112,11 @@ def l4d2_map_rand():
 def l4d2_restart_update():
     l4d2_screen_stop('screen -dmS')
     time.sleep(4)
-    os.system(
-        "./steamcmd/steamcmd.sh +login anonymous +force_install_dir ./l4d2/ +app_update 222860 +validate +quit")
+    os.system("./steamcmd/steamcmd.sh +login anonymous +force_install_dir ./l4d2/ +app_update 222860 +validate +quit")
     time.sleep(2)
     os.system(
-        "screen -dmS l4d2 ./steamcmd/l4d2/srcds_run -game left4dead2 -port 27015 +map {} -maxplayers 20 -secure +sv_lan 0 -tickrate 66".format(l4d2_map_rand()))
+        "screen -dmS l4d2 ./steamcmd/l4d2/srcds_run -game left4dead2 -port {0} +map {1} -maxplayers {2} -secure +sv_lan 0 -tickrate 66".format(
+            sg_port, l4d2_map_rand(), sg_max_players))
 
 
 #
@@ -127,11 +133,11 @@ if os.path.isfile('l4d2.dat'):
 
 #
 if ig_err == 0:
-    if l4d2_live(sg_ip, 27015):
+    if l4d2_live(sg_ip, sg_port):
         f1.write("ok ")
     else:
         time.sleep(4)
-        if l4d2_live(sg_ip, 27015):
+        if l4d2_live(sg_ip, sg_port):
             f1.write("ok2 ")
         else:
             f1.write("\ncron restart & start & update [{}]\n".format(time.ctime()))

@@ -11,6 +11,12 @@ import os
 import random
 import time
 
+# port l4d2 сервера
+sg_port = 27015
+
+# Максимальное количество игроков l4d2 сервера
+sg_max_players = 18
+
 #
 f1 = open('l4d2.dat', 'w')
 f2 = open("l4d2.log", 'a')
@@ -64,11 +70,11 @@ def l4d2_map_rand():
 def l4d2_restart_update():
     l4d2_screen_stop('screen -dmS')
     time.sleep(4)
-    os.system(
-        "./steamcmd/steamcmd.sh +login anonymous +force_install_dir ./l4d2/ +app_update 222860 +validate +quit")
+    os.system("./steamcmd/steamcmd.sh +login anonymous +force_install_dir ./l4d2/ +app_update 222860 +validate +quit")
     time.sleep(2)
     os.system(
-        "screen -dmS l4d2 ./steamcmd/l4d2/srcds_run -game left4dead2 -port 27015 +map {} -maxplayers 20 -secure +sv_lan 0 -tickrate 66".format(l4d2_map_rand()))
+        "screen -dmS l4d2 ./steamcmd/l4d2/srcds_run -game left4dead2 -port {0} +map {1} -maxplayers {2} -secure +sv_lan 0 -tickrate 66".format(
+            sg_port, l4d2_map_rand(), sg_max_players))
 
 
 #
