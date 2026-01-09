@@ -21,7 +21,7 @@ mkdir ~/steamcmd
 cd ~/steamcmd
 wget https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz
 tar -xvzf steamcmd_linux.tar.gz
-./steamcmd.sh +login anonymous +force_install_dir ./l4d2/ +app_update 222860 +validate +quit
+./steamcmd.sh +force_install_dir ./l4d2/ +login anonymous +app_update 222860 validate +quit
 #
 #
 cd
