@@ -19,7 +19,6 @@ sg_max_players = 18
 
 #
 f1 = open('l4d2.dat', 'w')
-f2 = open("l4d2.log", 'a')
 f1.close()
 
 
@@ -34,36 +33,10 @@ def l4d2_screen_stop(name):
 
 #
 def l4d2_map_rand():
-    i = random.randint(1, 14)
-    if i == 1:
-        return "c1m1_hotel"
-    elif i == 2:
-        return "c2m1_highway"
-    elif i == 3:
-        return "c3m1_plankcountry"
-    elif i == 4:
-        return "c4m1_milltown_a"
-    elif i == 5:
-        return "c5m1_waterfront"
-    elif i == 6:
-        return "c6m1_riverbank"
-    elif i == 7:
-        return "c7m1_docks"
-    elif i == 8:
-        return "c8m1_apartment"
-    elif i == 9:
-        return "c9m1_alleys"
-    elif i == 10:
-        return "c10m1_caves"
-    elif i == 11:
-        return "c11m1_greenhouse"
-    elif i == 12:
-        return "c12m1_hilltop"
-    elif i == 13:
-        return "c13m1_alpinecreek"
-    elif i == 14:
-        return "c14m1_junkyard"
-    return "c1m1_hotel"
+    maps = ["c1m1_hotel", "c2m1_highway", "c3m1_plankcountry", "c4m1_milltown_a", "c5m1_waterfront", "c6m1_riverbank",
+            "c7m1_docks", "c8m1_apartment", "c9m1_alleys", "c10m1_caves", "c11m1_greenhouse", "c12m1_hilltop",
+            "c13m1_alpinecreek", "c14m1_junkyard"]
+    return random.choice(maps)
 
 
 #
@@ -78,12 +51,13 @@ def l4d2_restart_update():
 
 
 #
-if os.path.exists('steamcmd'):
-    f2.write("\nrestart & start & update [{}]\n".format(time.ctime()))
-    l4d2_restart_update()
-else:
-    f2.write("\n./l4d2_install.sh\n")
+with open("l4d2.log", 'a') as f2:
+    if os.path.exists('steamcmd'):
+        f2.write(f"\nrestart & start & update [{time.ctime()}]\n")
+        l4d2_restart_update()
+    else:
+        f2.write("\n./l4d2_install.sh\n")
+
 
 #
 os.remove('l4d2.dat')
-f2.close()
