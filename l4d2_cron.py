@@ -20,6 +20,10 @@ sg_max_players = 18
 
 
 #
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+
+#
 def check_l4d2():
     with open("l4d2.log", 'a') as f:
         if os.path.exists('steamcmd'):

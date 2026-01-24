@@ -17,6 +17,11 @@ sg_port = 27015
 # Максимальное количество игроков l4d2 сервера
 sg_max_players = 18
 
+
+#
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+
 #
 f1 = open('l4d2.dat', 'w')
 f1.close()
